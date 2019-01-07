@@ -20,6 +20,7 @@ const addButton = () => {
 
     //add attr
     button.setAttribute("href", `http://10.9.2.160:7000/Camera/CameraConfig?cameraHash=${camHash}`);
+    button.setAttribute("target", "_blank")
 
     //create icon
     let iconElement = document.createElement("i")
