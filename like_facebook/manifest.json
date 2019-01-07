@@ -1,0 +1,34 @@
+{
+    "name": "Fb Like",
+    "version": "0.1",
+    "manifest_version": 2,
+    "description": "Like Facebook",
+    "icons": {
+        "16": "images/icon.png",
+        "48": "images/icon.png",
+        "128": "images/icon.png"
+    },
+    "author": "Thanh Na",
+    "browser_action": {
+        "default_icon": {
+            "16": "images/icon.png",
+            "48": "images/icon.png",
+            "128": "images/icon.png"
+        },
+        "default_title": "Facebook Auto Like",
+        "default_popup": "popup.html"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "*://*.facebook.com/*"
+            ],
+            "js": [
+                "scripts/content.js"
+            ],
+            "css": [
+                "css/style.css"
+            ]
+        }
+    ]
+}
