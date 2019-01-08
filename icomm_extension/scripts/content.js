@@ -36,14 +36,15 @@ const redirectUrl = (check) => {
                     case 0:
                         baseUrl = configExtension.url.pageConfig
                         break;
-                    case y:
+                    case 1:
                         baseUrl = configExtension.url.pageLogProfiling
                         break;
                     default:
                         baseUrl = configExtension.url.pageLogTracking
                 }
                 let url = baseUrl + cameraHash
-                $(location).attr('href', url)
+                // $(location).attr('href', url)
+                window.open(url, '_blank');
             }
         })
     });
@@ -54,8 +55,8 @@ const getInfoByCamHash = (cameraHash) => {
     return $.ajax({
         url: urlGetInfoCamera,
         type: "GET",
-        username: configExtension.account.username,
-        password: configExtension.account.password,
+        username: account.username,
+        password: account.password,
         dataType: "json"
     })
 }

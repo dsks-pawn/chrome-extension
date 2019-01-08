@@ -24,6 +24,7 @@
                 "*://192.168.100.232/*"
             ],
             "js": [
+                "account.js",
                 "scripts/config.js",
                 "scripts/jquery.js",
                 "scripts/content.js"

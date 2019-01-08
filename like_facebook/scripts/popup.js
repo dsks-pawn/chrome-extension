@@ -1,7 +1,7 @@
 const countLike = () => {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
         chrome.tabs.sendMessage(tabs[0].id, { fblike: "getlike" }, (response) => {
-            document.getElementById("number_like").innerHTML = response.solike
+            document.getElementById("text_content").innerHTML = `Tìm thấy <b id="number_like"> ${response.solike} </b>mục có thể like`
         })
     })
 }
