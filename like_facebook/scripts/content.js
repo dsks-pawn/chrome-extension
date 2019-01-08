@@ -12,13 +12,32 @@ const like = () => {
     })
 }
 
+var myVar = null
+
+const autoLike = () => {
+    myVar = setInterval(like, 1000);
+}
+
+const stopAutoLike = () => {
+    clearInterval(myVar);
+}
+
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     if (request.fblike == "getlike") {
         let numberLike = countLike()
         sendResponse({ solike: numberLike })
-    }
-    if (request.fblike == "like") {
+    } else if (request.fblike == "like") {
         like()
-        sendResponse({solike: 1})
+        sendResponse({ solike: 1 })
+    } else if (request.fblike == "autolike") {
+        autoLike()
+    } else if (request.fblike == "stoplike") {
+        stopAutoLike()
     }
 })
+
+window.onscroll = () => { resetData() };
+const resetData = () => {
+    chrome.runtime.sendMessage("reset_count_like", response => { });
+}
+
