@@ -1,31 +1,61 @@
-console.log(window.location)
-let urlGet = window.location.hash
-let camHash = urlGet.replace("#/view/", "");
 
-window.onload = function () {
-    addButton()
-};
-const addButton = () => {
-    //create button
-    let para = document.createElement("a");
+const addHtml = () => {
+    let element = $(".video-settings")
+    let html = `<li class="video-settings-button" onclick="redirectUrl(0)">
+                    <span class="glyphicon glyphicon-cog"></span> Config Camera
+                </li>
+                <li class="video-settings-button" onclick="redirectUrl(1)">
+                    <span class="glyphicon glyphicon-cog"></span> Log Camera
+                </li>`
+    element.append(html);
+}
 
-    //add button in DOM
-    let element = document.getElementsByClassName("stick-to-top")
-    element[0].appendChild(para);
+$(document).ready(() => {
+    addHtml()
+});
 
-    //get element after add DOM
-    let button = element[0].querySelector('a')
-    //add class
-    button.classList.add("button_click");
 
-    //add attr
-    button.setAttribute("href", `http://10.9.2.160:7000/Camera/CameraConfig?cameraHash=${camHash}`);
-    button.setAttribute("target", "_blank")
+const getCamHash = () => {
+    let hashUrl = location.hash
+    let cameraHash = hashUrl.replace("#/view/", "")
+    return cameraHash
+}
 
-    //create icon
-    let iconElement = document.createElement("i")
-    button.appendChild(iconElement);
-    let icon = button.querySelector('i')
-    icon.classList.add("glyphicon");
-    icon.classList.add("glyphicon-share");
+const redirectUrl = (check) => {
+    let cameraHash = getCamHash()
+    let promiseInfoCamHash = getInfoByCamHash(cameraHash)
+    promiseInfoCamHash.done(data => {
+        let promiseSendDataCms = sendDataToCms(data, cameraHash)
+        promiseSendDataCms.done(res => {
+            if (res.s) {
+                let url = check == 0 ? `${configExtension.url.pageConfig}${cameraHash}` : `${configExtension.url.pageLog}${cameraHash}`
+                $(location).attr('href', url)
+            }
+        })
+    });
+}
+
+const getInfoByCamHash = (cameraHash) => {
+    let urlGetInfoCamera = `${configExtension.url.infoCamHash}${cameraHash}`
+    return $.ajax({
+        url: urlGetInfoCamera,
+        type: "GET",
+        username: configExtension.account.username,
+        password: configExtension.account.password,
+        dataType: "json"
+    })
+}
+
+const sendDataToCms = (data, cameraHash) => {
+    let dataSend = {
+        url: data[0].url,
+        cameraHash: cameraHash
+    }
+    let urlUpdate = configExtension.url.sendDataCms
+    return $.ajax({
+        url: urlUpdate,
+        type: "POST",
+        dataType: "json",
+        data: dataSend
+    })
 }

@@ -7,13 +7,14 @@ const countLike = () => {
 }
 countLike()
 
+const like = () => {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        chrome.tabs.sendMessage(tabs[0].id, { fblike: "like" }, (response) => {
+            document.getElementById("text_content").innerHTML = "Đã like toàn bộ mục có thể like"
+        })
+    })
+}
 
-// const like = () => {
-//     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-//         chrome.tabs.sendMessage(tabs[0].id, { fblike: "like" }, (response) => {
-//             document.getElementById("text_content").innerHTML = "Đã like toàn bộ mục có thể like"
-//             document.getElementsByClassName("btn-like").remove()
-//         })
-//     })
-// }
-// document.getElementsByClassName("btn-like").addEventListener("click", like);
+window.onload = function () {
+    document.getElementById("btn-like").addEventListener("click", like);
+};

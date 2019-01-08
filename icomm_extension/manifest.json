@@ -1,8 +1,8 @@
 {
-    "name": "ICOMM",
+    "name": "ICOMM-EXTENSION",
     "version": "0.1",
     "manifest_version": 2,
-    "description": "ICOMM",
+    "description": "ICOMM-EXTENSION",
     "icons": {
         "16": "images/icon.png",
         "48": "images/icon.png",
@@ -15,7 +15,7 @@
             "48": "images/icon.png",
             "128": "images/icon.png"
         },
-        "default_title": "ICOMM",
+        "default_title": "ICOMM-EXTENSION",
         "default_popup": "popup.html"
     },
     "content_scripts": [
@@ -24,6 +24,8 @@
                 "*://192.168.100.232/*"
             ],
             "js": [
+                "scripts/config.js",
+                "scripts/jquery.js",
                 "scripts/content.js"
             ],
             "css": [
