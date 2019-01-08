@@ -5,7 +5,10 @@ const addHtml = () => {
                     <span class="glyphicon glyphicon-cog"></span> Config Camera
                 </li>
                 <li class="video-settings-button" onclick="redirectUrl(1)">
-                    <span class="glyphicon glyphicon-cog"></span> Log Camera
+                    <span class="glyphicon glyphicon-cog"></span> Profiling log
+                </li>
+                <li class="video-settings-button" onclick="redirectUrl(2)">
+                     <span class="glyphicon glyphicon-cog"></span> Tracking log
                 </li>`
     element.append(html);
 }
@@ -28,7 +31,18 @@ const redirectUrl = (check) => {
         let promiseSendDataCms = sendDataToCms(data, cameraHash)
         promiseSendDataCms.done(res => {
             if (res.s) {
-                let url = check == 0 ? `${configExtension.url.pageConfig}${cameraHash}` : `${configExtension.url.pageLog}${cameraHash}`
+                let baseUrl
+                switch (check) {
+                    case 0:
+                        baseUrl = configExtension.url.pageConfig
+                        break;
+                    case y:
+                        baseUrl = configExtension.url.pageLogProfiling
+                        break;
+                    default:
+                        baseUrl = configExtension.url.pageLogTracking
+                }
+                let url = baseUrl + cameraHash
                 $(location).attr('href', url)
             }
         })
